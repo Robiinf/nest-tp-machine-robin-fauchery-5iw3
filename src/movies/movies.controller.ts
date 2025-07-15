@@ -124,7 +124,10 @@ export class MoviesController {
   @Get('watchlist/my')
   @RequireEmailVerification()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Récupérer ma watchlist personnelle' })
+  @ApiOperation({ 
+    summary: 'Récupérer ma watchlist personnelle',
+    description: 'Retourne UNIQUEMENT les films que j\'ai ajoutés à ma watchlist. Si ma watchlist est vide, retourne un tableau vide.'
+  })
   @ApiResponse({
     status: 200,
     description: 'Watchlist récupérée avec succès',
@@ -137,7 +140,10 @@ export class MoviesController {
   @Get('watchlist/all')
   @RequireEmailVerification()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Récupérer tous les films avec mon statut de visionnage' })
+  @ApiOperation({ 
+    summary: 'Récupérer tous les films avec mon statut de visionnage',
+    description: 'Retourne TOUS les films du catalogue avec mon statut pour chacun (watchStatus = null si pas dans ma watchlist). Utile pour afficher un catalogue complet avec mes préférences.'
+  })
   @ApiResponse({
     status: 200,
     description: 'Films avec statut récupérés avec succès',

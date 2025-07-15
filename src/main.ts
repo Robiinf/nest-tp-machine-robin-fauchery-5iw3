@@ -13,8 +13,8 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('TP machine')
-    .setDescription('TP machine API')
+    .setTitle('TP machine - Robin FAUCHERY 5IW3')
+    .setDescription('TP machine API - Robin FAUCHERY 5IW3')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
