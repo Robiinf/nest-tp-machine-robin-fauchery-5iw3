@@ -18,6 +18,7 @@ model User {
   updatedAt              DateTime            @updatedAt
   emailVerifications     EmailVerification[]
   movies                 Movie[]
+  userMovies             UserMovie[]
   twoFactorCodes         TwoFactorCode[]
 
   @@map("users")
@@ -37,6 +38,7 @@ model Movie {
   updatedAt   DateTime    @updatedAt
   userId      Int
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userMovies  UserMovie[]
 
   @@map("movies")
 }
@@ -74,4 +76,22 @@ enum MovieStatus {
   WATCHING
   TO_WATCH
   DROPPED
+}
+
+enum WatchStatus {
+  WANT_TO_WATCH
+  WATCHING
+  WATCHED
+}
+
+model UserMovie {
+  userId  Int
+  movieId Int
+  status  WatchStatus @default(WANT_TO_WATCH)
+  addedAt DateTime    @default(now())
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie   Movie       @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([userId, movieId])
+  @@map("user_movies")
 }

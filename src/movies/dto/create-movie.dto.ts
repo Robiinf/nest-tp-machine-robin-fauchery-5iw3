@@ -1,5 +1,6 @@
-import { IsString, IsNotEmpty, IsOptional, IsNumber, Min, Max } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsNumber, Min, Max, IsEnum } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { MovieStatus } from '@prisma/client';
 
 export class CreateMovieDto {
   @ApiProperty({
@@ -9,15 +10,6 @@ export class CreateMovieDto {
   @IsString()
   @IsNotEmpty()
   title: string;
-
-  @ApiProperty({
-    description: 'Description du film',
-    example: 'Un thriller de science-fiction sur les rêves dans les rêves.',
-    required: false,
-  })
-  @IsString()
-  @IsOptional()
-  description?: string;
 
   @ApiProperty({
     description: 'Réalisateur du film',
@@ -37,7 +29,7 @@ export class CreateMovieDto {
   @IsOptional()
   @Min(1900)
   @Max(new Date().getFullYear() + 10)
-  year?: number;
+  releaseYear?: number;
 
   @ApiProperty({
     description: 'Genre du film',
@@ -58,4 +50,23 @@ export class CreateMovieDto {
   @Min(0)
   @Max(10)
   rating?: number;
+
+  @ApiProperty({
+    description: 'Statut du film',
+    enum: MovieStatus,
+    example: MovieStatus.TO_WATCH,
+    required: false,
+  })
+  @IsEnum(MovieStatus)
+  @IsOptional()
+  status?: MovieStatus;
+
+  @ApiProperty({
+    description: 'Notes personnelles sur le film',
+    example: 'À voir absolument !',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  notes?: string;
 }

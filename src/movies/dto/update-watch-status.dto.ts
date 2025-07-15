@@ -1,11 +1,8 @@
 import { IsEnum } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { WatchStatus } from '@prisma/client';
 
-export enum WatchStatus {
-  WANT_TO_WATCH = 'WANT_TO_WATCH',
-  WATCHING = 'WATCHING',
-  WATCHED = 'WATCHED',
-}
+export { WatchStatus };
 
 export class UpdateWatchStatusDto {
   @ApiProperty({

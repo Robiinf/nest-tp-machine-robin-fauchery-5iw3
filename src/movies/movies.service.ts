@@ -13,7 +13,10 @@ export class MoviesService {
 
   async create(createMovieDto: CreateMovieDto): Promise<MovieResponseDto> {
     const movie = await this.prisma.movie.create({
-      data: createMovieDto,
+      data: {
+        ...createMovieDto,
+        userId: 1, // TODO: get from authenticated user
+      },
     });
 
     return movie;
