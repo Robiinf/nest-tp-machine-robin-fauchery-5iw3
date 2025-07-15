@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,7 +8,70 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
+  id                     Int                 @id @default(autoincrement())
+  email                  String              @unique
+  password               String
+  role                   Role                @default(USER)
+  isEmailVerified        Boolean             @default(false)
+  emailVerificationToken String?             @unique
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+  emailVerifications     EmailVerification[]
+  movies                 Movie[]
+  twoFactorCodes         TwoFactorCode[]
+
+  @@map("users")
+}
+
+model Movie {
+  id          Int         @id @default(autoincrement())
+  title       String
+  director    String?
+  releaseYear Int?
+  genre       String?
+  rating      Float?      @db.Real
+  status      MovieStatus @default(TO_WATCH)
+  notes       String?
+  watchedAt   DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("movies")
+}
+
+model EmailVerification {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("email_verifications")
+}
+
+model TwoFactorCode {
+  id        Int      @id @default(autoincrement())
+  code      String
+  userId    Int
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("two_factor_codes")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum MovieStatus {
+  WATCHED
+  WATCHING
+  TO_WATCH
+  DROPPED
 }
