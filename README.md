@@ -35,17 +35,6 @@ Copier le fichier d'environnement :
 cp .env.example .env
 ```
 
-Configurer les variables dans `.env` :
-```env
-DATABASE_URL="postgresql://user:password@localhost:5432/app"
-JWT_SECRET="your-super-secret-jwt-key"
-EMAIL_FROM="noreply@example.com"
-EMAIL_HOST="smtp.example.com"
-EMAIL_PORT=587
-EMAIL_USER="your-email@example.com"
-EMAIL_PASS="your-email-password"
-```
-
 ### 3. Démarrage complet
 ```bash
 # 1. Lancer la base de données
