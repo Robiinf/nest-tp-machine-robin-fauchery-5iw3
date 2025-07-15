@@ -68,6 +68,7 @@ npm run start:dev
 - **API** : http://localhost:3000
 - **Documentation Swagger** : http://localhost:3000/api
 - **Base de données** : PostgreSQL sur le port 5432
+- **Maildev** : http://localhost:1080
 
 ## 🏗️ Architecture
 
